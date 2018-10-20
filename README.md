@@ -35,6 +35,11 @@ Or with some configuration options:
 
 _Originally written by Aaron Swartz. This code is distributed under the GPLv3._
 
+## Installation
+
+### Directly using Github repositry
+
+    pip install git+git://github.com/guruguruman/html2text.git
 
 ## How to do a release
 
