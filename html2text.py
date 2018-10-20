@@ -197,6 +197,7 @@ class HTML2Text(HTMLParser.HTMLParser):
         self.ul_item_mark = '*'
         self.emphasis_mark = '_'
         self.strong_mark = '**'
+        self.heading_mark = '#'
 
         if out is None:
             self.out = self.outtextf
@@ -401,7 +402,7 @@ class HTML2Text(HTMLParser.HTMLParser):
             self.p()
             if start:
                 self.inheader = True
-                self.o(hn(tag)*"#" + ' ')
+                self.o(hn(tag)*self.heading_mark + ' ' if len(self.heading_mark) > 0 else "")
             else:
                 self.inheader = False
                 return # prevent redundant emphasis marks on headers
@@ -856,6 +857,8 @@ def main():
         default=False, help="hide strike-through text. only relevant when -g is specified as well")
     p.add_option("--escape-all", action="store_true", dest="escape_snob",
         default=False, help="Escape all special characters.  Output is less readable, but avoids corner case formatting issues.")
+    p.add_option("--hide-heading-mark", action="store_true", dest="hide_heading_mark",
+        default=False, help="hide heading mark remaining heading text. only relevant when -h is specified as well.")
     (options, args) = p.parse_args()
 
     # process input
@@ -897,6 +900,8 @@ def main():
     if options.em_style_asterisk:
         h.emphasis_mark = '*'
         h.strong_mark = '__'
+    if options.hide_heading_mark:
+        h.heading_mark = ''
 
     h.body_width = options.body_width
     h.list_indent = options.list_indent

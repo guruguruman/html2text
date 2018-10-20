@@ -8,7 +8,6 @@ import sys
 sys.path.insert(0, '..')
 import html2text
 
-
 def test_module(fn, google_doc=False, **kwargs):
     print_conditions('module', google_doc=google_doc, **kwargs)
 
@@ -89,6 +88,7 @@ def get_baseline(fn):
 def run_all_tests():
     html_files = glob.glob("*.html")
     passing = True
+    print(html_files)
     for fn in html_files:
         module_args = {}
         cmdline_args = []
@@ -108,6 +108,10 @@ def run_all_tests():
         if fn.lower().find('escape_snob') >= 0:
             module_args['escape_snob'] = True
             cmdline_args.append('--escape-all')
+
+        if fn.lower().find('heading_mark') >= 0:
+            module_args['heading_mark'] = ''
+            cmdline_args.append('--hide-heading-mark')
 
         print('\n' + fn + ':')
         passing = passing and test_module(fn, **module_args)
